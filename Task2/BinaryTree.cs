@@ -20,6 +20,10 @@ namespace Task2
 
         private Node root;
         public int Count { get; private set; }
+
+        public delegate void BinaryTreeHandler(string message);
+
+        public event BinaryTreeHandler AddNotify;
         public void Add (T value)
         {
            Node newNode = new Node(value);
@@ -60,6 +64,7 @@ namespace Task2
                 }
             }
             Count++;
+            AddNotify?.Invoke($"Node with value {value} is added");
         }
         public void Remove(T value)
         {

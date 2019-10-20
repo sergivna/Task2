@@ -7,6 +7,8 @@ namespace Task2
         static void Main(string[] args)
         {
             BinaryTree<int> binaryTree = new BinaryTree<int>();
+
+            binaryTree.AddNotify += Print;
             binaryTree.Add(2);
             binaryTree.Add(3);
             binaryTree.Add(4);
@@ -30,7 +32,13 @@ namespace Task2
                 Console.WriteLine(item);
             }
 
+
             Console.ReadKey();
+        }
+
+        static void Print(string message)
+        {
+            Console.WriteLine(message);
         }
     }
 }
