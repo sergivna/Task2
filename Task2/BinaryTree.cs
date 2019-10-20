@@ -16,11 +16,6 @@ namespace Task2
             {
                 this.value = value;
             }
-
-            internal IEnumerator GetEnumerator()
-            {
-                throw new NotImplementedException();
-            }
         }
 
         private Node root;
@@ -277,7 +272,7 @@ namespace Task2
         }
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return  root.GetEnumerator();
+            return GetEnumerator();
         }
     }
 }
