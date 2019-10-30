@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Task2
 {
@@ -17,28 +18,54 @@ namespace Task2
             binaryTree.Add(5);
             binaryTree.Remove(3);
 
-            Student student = new Student() { mark = 3 };
-            Student student1 = new Student() { mark = 4 };
-            Student student2 = new Student() { mark = 6 };
-            Student student3 = new Student() { mark = 1 };
-            Test<Student> test = new Test<Student>();
-            test.Add(student);
-            test.Add(student1);
-            test.Add(student2);
-            test.Add(student3);
+            bool test = binaryTree.Contains(2);
 
-            foreach(var item in binaryTree)
+            BinaryTree<Student> marks = new BinaryTree<Student>();
+
+            List<Student> students = new List<Student>()
             {
-                Console.WriteLine(item);
+                 new Student("V", 3 ),
+                 new Student("Y",  4),
+                 new Student("U",  6 ),
+                 new Student("G",  1 )
+            };
+
+
+            foreach(var item in students)
+            {
+                marks.Add(item);
             }
 
+            Console.WriteLine("Students marks:");
 
+            foreach(var item in marks)
+            {
+                Console.WriteLine(item.name + ":" + item.mark);
+            }
+
+            DynamicArray<int> array = new DynamicArray<int>(1, 3, 4, 6, 8);
+
+            array[1] = 44;
+            array[6] = 7;
+
+
+            Console.WriteLine("Array values:");
+
+
+
+            foreach(var i in array)
+            {
+                Console.WriteLine(i);
+            }
+           
             Console.ReadKey();
         }
 
+        
         static void Print(string message)
         {
             Console.WriteLine(message);
         }
+      
     }
 }

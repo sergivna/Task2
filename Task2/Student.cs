@@ -11,16 +11,11 @@ namespace Task2
         public String test;
         public int mark;
         public DateTime date;
-        public Student()
-        {
-        }
-        public Student(String name, int age, String test, int mark, DateTime date)
+
+        public Student(String name, int mark)
         {
             this.name = name;
-            this.age = age;
-            this.test = test;
             this.mark = mark;
-            this.date = date;
         }
         public int CompareTo(Student other)
         {        

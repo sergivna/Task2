@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Task2
 {
-    public class BinaryTree<T>: IEnumerable<T> where T: IComparable<T>
+    public class BinaryTree<T>: IEnumerable<T>, ICloneable where T: IComparable<T>
     {
-        public class Node
+        private class Node
         {
             public T value;
             public Node leftChild;
@@ -59,7 +59,7 @@ namespace Task2
                     }
                     else
                     {
-                        throw new Exception("Додавання нового елементу");
+                        throw new TreeException("Failed atempt to add item");
                     }
                 }
             }
@@ -214,10 +214,6 @@ namespace Task2
                         {
                             current = current.rightChild;
                         }
-                        else
-                        {
-                            throw new Exception("There is no such value");
-                        }
                     }
                 }
             }
@@ -230,24 +226,25 @@ namespace Task2
         }
         public bool Contains(T value)
         {
-            Node current = root;
-            while (true)
+            foreach( var item in this)
             {
-                if(current.value.CompareTo(value) == 0)
-                {
+                if (item.CompareTo(value) == 0)
                     return true;
-                }
-                else
-                {
-                    if (value.CompareTo(current.value) < 0 && current.leftChild != null)
-                        current = current.leftChild;
-                    else if (value.CompareTo(current.value) > 0 && current.rightChild != null)
-                        current = current.rightChild;
-                    else break;
-                }
             }
 
             return false;
+        }
+        public object Clone()
+        {
+            BinaryTree<T> newTree = new BinaryTree<T>();
+
+            foreach (var item in PreOrder())
+            {
+                newTree.Add(item);
+                Console.WriteLine(item);
+            }
+
+            return newTree;
         }
         public IEnumerable<T> InOrder()
         {
@@ -271,13 +268,29 @@ namespace Task2
                 }
             }
         }
+        public IEnumerable<T> PreOrder()
+        {
+            if (root == null) yield break;
+
+            var stack = new Stack<Node>();
+            stack.Push(root);
+
+            while (stack.Count > 0)
+            {
+                var node = stack.Pop();
+                yield return node.value;
+                if (node.rightChild != null) stack.Push(node.rightChild);
+                if (node.leftChild != null) stack.Push(node.leftChild);
+            }
+        }
         public IEnumerator<T> GetEnumerator()
         {
-            return InOrder().GetEnumerator();
+            return PreOrder().GetEnumerator();
         }
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
+
     }
 }
