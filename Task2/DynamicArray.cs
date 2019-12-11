@@ -7,7 +7,7 @@ namespace Task2
 {
     public class DynamicArray<T> :IEnumerable<T>
     {
-        private T[] value;
+        public T[] value;
         private int offset;
         public int Length
         {
@@ -49,21 +49,21 @@ namespace Task2
             }
             set
             {
-                if (index < offset)
+                if (index < offset || index >  Length -1  + offset)
                     throw new ArrayException("Array indices start with " + offset.ToString());
-                if(index - offset + 1 > this.Length)
-                {
-                    T[] temp = new T[this.Length];
-                    for(int i =0; i< temp.Length; ++i)
-                    {
-                        temp[i] = this.value[i];
-                    }
-                    this.value = new T[index - offset + 1];
-                    for (int i = 0; i < temp.Length; ++i)
-                    {
-                        this.value[i] = temp[i];
-                    }
-                }
+                //if(index - offset + 1 > this.Length)
+                //{
+                //    T[] temp = new T[this.Length];
+                //    for(int i =0; i< temp.Length; ++i)
+                //    {
+                //        temp[i] = this.value[i];
+                //    }
+                //    this.value = new T[index - offset + 1];
+                //    for (int i = 0; i < temp.Length; ++i)
+                //    {
+                //        this.value[i] = temp[i];
+                //    }
+                //}
                 this.value[index - offset] = value;
             }
         }

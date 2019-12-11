@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+//using static Task2.BinaryTree<T>;
 
 namespace Task2
 {
@@ -9,7 +10,7 @@ namespace Task2
         {
             BinaryTree<int> binaryTree = new BinaryTree<int>();
 
-            binaryTree.AddNotify += Print;
+            binaryTree.AddNotify += new EventDelegate( Print);
             binaryTree.Add(2);
             binaryTree.Add(3);
             binaryTree.Add(4);
@@ -46,7 +47,7 @@ namespace Task2
             DynamicArray<int> array = new DynamicArray<int>(1, 3, 4, 6, 8);
 
             array[1] = 44;
-            array[6] = 7;
+            array[4] = 7;
 
 
             Console.WriteLine("Array values:");
@@ -62,9 +63,9 @@ namespace Task2
         }
 
         
-        static void Print(string message)
+        static void Print(object sender, EventAdd e)
         {
-            Console.WriteLine(message);
+            Console.WriteLine(e.Info);
         }
       
     }

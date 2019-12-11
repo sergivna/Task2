@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Task2
 {
+    public delegate void EventDelegate(object sender, EventAdd e);
+
+
     public class BinaryTree<T>: IEnumerable<T>, ICloneable where T: IComparable<T>
     {
         private class Node
@@ -18,12 +21,19 @@ namespace Task2
             }
         }
 
+        public BinaryTree(params T[] values)
+        {
+            foreach(var item in values)
+            {
+                this.Add(item);
+            }
+        }
+
         private Node root;
-        public int Count { get; private set; }
+        public int Count { get; private set; }     
 
-        public delegate void BinaryTreeHandler(string message);
+        public event EventDelegate AddNotify = null;
 
-        public event BinaryTreeHandler AddNotify;
         public void Add (T value)
         {
            Node newNode = new Node(value);
@@ -57,14 +67,10 @@ namespace Task2
                         else
                             current = current.rightChild;
                     }
-                    else
-                    {
-                        throw new TreeException("Failed atempt to add item");
-                    }
                 }
             }
             Count++;
-            AddNotify?.Invoke($"Node with value {value} is added");
+            AddNotify?.Invoke(this, new EventAdd("Add " + value));
         }
         public void Remove(T value)
         {
@@ -246,6 +252,30 @@ namespace Task2
 
             return newTree;
         }
+
+        public T MinValue()
+        {
+            Node current = root;
+
+            while (current.leftChild != null)
+            {
+                current = current.leftChild;
+            }
+
+            return current.value;
+        }
+
+        public T MaxValue()
+        {
+            Node current = root;
+
+            while (current.rightChild != null)
+            {
+                current = current.rightChild;
+            }
+
+            return current.value;
+        }
         public IEnumerable<T> InOrder()
         {
             if (root == null) yield break;
@@ -268,6 +298,7 @@ namespace Task2
                 }
             }
         }
+
         public IEnumerable<T> PreOrder()
         {
             if (root == null) yield break;
@@ -291,6 +322,5 @@ namespace Task2
         {
             return GetEnumerator();
         }
-
     }
 }
